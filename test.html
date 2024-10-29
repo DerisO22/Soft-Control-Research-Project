@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circular Slider</title>
+    <!--Google Fonts and Icons-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css"></style>
+  </head>
+  <body>
+    <!--Timer and Start Button-->
+    <div class="topMenu">
+      <button id="start">Start Timer</button>
+      <button id="reset">Reset Timer</button>
+      <p id="outputTime">Time Output</p>
+    </div>
+
+    <!--Rotary Dial 1-->
+    <div class="center">
+      <div class="slider">
+        <div class="knob">
+          <div class="rotator">
+            <div class="text">0</div>
+          </div>
+          <div class="pointer">
+            <span class="material-icons"> play_arrow </span>
+          </div>
+        </div>
+
+        <svg class="progress-bar" width="300" height="300">
+          <circle class="progress-circle" cx="150" cy="150" r="140"></circle>
+          <circle
+            id="circle1"
+            class="progress-circle"
+            cx="150"
+            cy="150"
+            r="140"
+            style="
+              stroke: url(#gradient1);
+              stroke-width: 16px;
+              stroke-linecap: round;
+            "
+          ></circle>
+          <defs>
+            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color: red" />
+              <stop offset="50%" style="stop-color: orange" />
+              <stop offset="100%" style="stop-color: rgb(29, 209, 94)" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!--Horizontal Slider-->
+      <div class="middleControls">
+        <!--Horizontal Slider-->
+        <div class="slidecontainer">
+          <p id="sliderValue">Slider Value</p>
+          <input class="horizontalSlider" type="range" min="1" max="100" value="50">
+        </div>
+
+        <!--Toggle Button-->
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="switchButton"></span>
+        </label>
+      </div>
+      
+    <!--Rotary Dial 2-->
+      <div class="slider2">
+        <div class="knob">
+          <div class="rotator">
+            <div class="text">0</div>
+          </div>
+          <div class="pointer">
+            <span class="material-icons"> play_arrow </span>
+          </div>
+        </div>
+
+        <svg class="progress-bar" width="300" height="300">
+          <circle class="progress-circle" cx="150" cy="150" r="140"></circle>
+          <circle
+            id="circle2"
+            class="progress-circle"
+            cx="150"
+            cy="150"
+            r="140"
+            style="
+              stroke: url(#gradient2);
+              stroke-width: 16px;
+              stroke-linecap: round;
+            "
+          ></circle>
+          <defs>
+            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color: red" />
+              <stop offset="50%" style="stop-color: orange" />
+              <stop offset="100%" style="stop-color: rgb(29, 209, 94)" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+
+    <!--2 Regular Buttons-->
+    <div class="bottomControls">
+      <button id="firstButton">Button 1</button>
+      <button id="secondButton">Button 2</button>
+    </div>
+
+
+    <!--Stop Button-->
+    <div class="bottomMenu">
+      <button id="stop">Stop Timer</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

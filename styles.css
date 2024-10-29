@@ -1,0 +1,288 @@
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: rgb(235, 235, 235);
+}
+/*
+*  Time Management - Top Menu
+*/
+.topMenu {
+  text-align: center;
+  margin-top: 1rem;
+}
+.topMenu button {
+  width: 10rem;
+  height: 6rem;
+  font-size: 1.5rem;
+}
+#outputTime {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+/* Start Button */
+#start {
+  background-color: green;
+  border: 1px solid greenyellow;
+  border-radius: 10% 40% / 50% 20%;
+  color: azure;
+}
+#start:hover {
+  background-color: rgb(18, 77, 21);
+}
+#start:active {
+  transform: translateY(4px);
+}
+/* Reset Button */
+#reset {
+  background-color: teal;
+  border: 1px solid greenyellow;
+  border-radius: 50% 20% / 10% 40%;
+  color: azure;
+}
+#reset:hover {
+  background-color: rgb(20, 18, 77);
+}
+#reset:active {
+  transform: translateY(4px);
+}
+
+/* 
+*  Management of time and other things - Bottom Menu
+*/
+.bottomMenu {
+  text-align: right;
+  margin-top: 4rem;
+  margin-right: 1rem;
+}
+.bottomMenu button {
+  width: 10rem;
+  height: 6rem;
+  font-size: 1.5rem;
+}
+/* Stop Button */
+#stop {
+  background-color: rgb(212, 38, 18);
+  border: 1px solid greenyellow;
+  border-radius: 50% 20% / 10% 40%;
+  color: azure;
+}
+#stop:hover {
+  background-color: rgb(77, 18, 18);
+}
+#stop:active {
+  transform: translateY(4px);
+}
+
+/*
+*  Sliders
+*/
+.center {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; /* Arrange sliders Horizontally */
+  margin-bottom: -5rem;
+}
+.slider, .slider2 {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  position: relative;
+  user-select: none;
+  margin: 6rem; /* Add space between sliders */
+}
+.knob {
+  width: 220px;
+  height: 220px;
+  background: rgb(222, 222, 222);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.knob .rotator {
+  width: 180px;
+  height: 180px;
+  background: rgb(235, 235, 235);
+  border-radius: 50%;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2), inset 1px 2px 1px white,
+    2px -1px 1px rgba(0, 0, 0, 0.2), -1px 0px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.knob .text {
+  width: 3rem;
+  height: 3rem;
+  margin-left: 67.5px;
+  font-family: poppins;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(57, 55, 53);
+  border: 0.3mm solid rgba(57, 55, 53);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pointer {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: calc(50% - 10px);
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transform-origin: 110px 10px;
+  transform: rotate(-45deg);
+}
+.pointer span {
+  font-size: 60px;
+  transform: rotate(180deg) translateX(15px);
+}
+circle {
+  fill: none;
+}
+circle:nth-child(1) {
+  stroke: rgba(0, 0, 0, 0.7);
+  stroke-width: 15px;
+  stroke-dasharray: 660;
+  transform-origin: center;
+  transform: rotate(135deg);
+  stroke-linecap: round;
+}
+circle:nth-child(2) {
+  stroke: rgb(2, 117, 232);
+  stroke-width: 15px;
+  stroke-dasharray: 880;
+  stroke-dashoffset: calc(880 - (660 * 0) / 100);
+  transform-origin: center;
+  transform: rotate(135deg);
+  stroke-linecap: round;
+}
+
+/* 
+*  Horizontal Slider
+*/
+
+/* 
+*  Middle Controls Div
+*/
+.middleControls {
+  text-align: center;
+}
+
+/* 
+*  Toggle Button
+*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 34px;
+  margin-top: 3rem;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchButton {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switchButton:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .switchButton {
+  background-color: #2196F3;
+}
+
+input:focus + .switchButton {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .switchButton:before {
+  -webkit-transform: translateX(66px);
+  -ms-transform: translateX(66px);
+  transform: translateX(66px);
+}
+
+/* Rounded sliders */
+.switchButton.round {
+  border-radius: 34px;
+}
+
+.switchButton.round:before {
+  border-radius: 50%;
+}
+
+/* 
+*  2 Regular Buttons - Bottom Controls
+*/
+.bottomControls {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.bottomControls button {
+  width: 10rem;
+  height: 6rem;
+  font-size: 1.5rem;
+}
+#firstButton{
+  background-color: rgb(128, 0, 126);
+  border: 1px solid greenyellow;
+  border-radius: 10px;
+  color: azure;
+  margin-right: 12rem;
+}
+#firstButton:hover {
+  background-color: rgb(20, 18, 77);
+}
+#firstButton:active {
+  transform: translateY(4px);
+}
+#secondButton{
+  background-color: rgb(128, 124, 0);
+  border: 1px solid greenyellow;
+  border-radius: 10px;
+  color: azure;
+}
+#secondButton:hover {
+  background-color: rgb(75, 77, 18);
+}
+#secondButton:active {
+  transform: translateY(4px);
+}
