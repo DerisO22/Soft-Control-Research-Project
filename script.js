@@ -29,28 +29,28 @@ resetButton.addEventListener('click', () => {
  * Rotary Dials
  */
 
-var knobPositionX;
-var knobPositionY;
-var mouseX;
-var mouseY;
-var knobCenterX;
-var knobCenterY;
-var adjacentSide;
-var oppositeSide;
-var currentRadiansAngle;
-var getRadiansInDegrees;
-var finalAngleInDegrees;
-var volumeSetting;
-var tickHighlightPosition;
-var audio1 = new Audio("https://www.cineblueone.com/maskWall/audio/skylar.mp3"); 
-var audio2 = new Audio("https://www.cineblueone.com/maskWall/audio/skylar.mp3"); 
-var startingTickAngle = -135;
-var tickContainer1 = document.getElementById("tickContainer");
-var tickContainer2 = document.getElementById("tickContainer2");
-var volumeKnob1 = document.getElementById("knob");
-var volumeKnob2 = document.getElementById("knob2");
-var boundingRectangle1 = volumeKnob1.getBoundingClientRect(); 
-var boundingRectangle2 = volumeKnob2.getBoundingClientRect(); 
+let knobPositionX;
+let knobPositionY;
+let mouseX;
+let mouseY;
+let knobCenterX;
+let knobCenterY;
+let adjacentSide;
+let oppositeSide;
+let currentRadiansAngle;
+let getRadiansInDegrees;
+let finalAngleInDegrees;
+let volumeSetting;
+let tickHighlightPosition;
+let audio1 = new Audio("https://www.cineblueone.com/maskWall/audio/skylar.mp3"); 
+let audio2 = new Audio("https://www.cineblueone.com/maskWall/audio/skylar.mp3"); 
+let startingTickAngle = -135;
+let tickContainer1 = document.getElementById("tickContainer");
+let tickContainer2 = document.getElementById("tickContainer2");
+let volumeKnob1 = document.getElementById("knob");
+let volumeKnob2 = document.getElementById("knob2");
+let boundingRectangle1 = volumeKnob1.getBoundingClientRect(); 
+let boundingRectangle2 = volumeKnob2.getBoundingClientRect(); 
 
 function main(){
     audio1.volume = 0; 
@@ -68,7 +68,7 @@ function onMouseDown1(){
     if(audio1.paused == true){
         //mobile users must tap anywhere to start audio
         //https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
-        var promise = audio1.play();
+        let promise = audio1.play();
 
         if(promise !== undefined) {
             promise.then(function(){
@@ -85,7 +85,7 @@ function onMouseDown2(){
     if(audio2.paused == true){
         //mobile users must tap anywhere to start audio
         //https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
-        var promise = audio2.play();
+        let promise = audio2.play();
 
         if(promise !== undefined) {
             promise.then(function(){
@@ -201,8 +201,8 @@ function createTicks(numTicks, highlightNumTicks, knobNumber){
     }
 
     //create ticks
-    for(var i=0;i<numTicks;i++){
-        var tick = document.createElement("div");
+    for(let i=0;i<numTicks;i++){
+        let tick = document.createElement("div");
 
         if(i < highlightNumTicks){
             tick.className = "tick activetick";
@@ -225,7 +225,7 @@ function createTicks(numTicks, highlightNumTicks, knobNumber){
 
 //detect for mobile devices from https://www.sitepoint.com/navigator-useragent-mobiles-including-ipad/
 function detectMobile(){
-    var result = (navigator.userAgent.match(/(iphone)|(ipod)|(ipad)|(android)|(blackberry)|(windows phone)|(symbian)/i));
+    let result = (navigator.userAgent.match(/(iphone)|(ipod)|(ipad)|(android)|(blackberry)|(windows phone)|(symbian)/i));
 
     if(result !== null){
         return "mobile";
