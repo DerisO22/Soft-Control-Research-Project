@@ -25,40 +25,15 @@
       <p id="outputTime">Time Output</p>
     </div>
 
-    <!--Rotary Dial 1-->
-    <div class="center">
-      <div class="slider">
-        <div class="knob">
-          <div class="rotator">
-            <div class="text">0</div>
-          </div>
-          <div class="pointer">
-            <span class="material-icons"> play_arrow </span>
-          </div>
-        </div>
+    <p>Current volume: <span id="volumeValue" class="current-value">0%</span></p>
+    <p>Current volume: <span id="volumeValue2" class="current-value2">0%</span></p>
 
-        <svg class="progress-bar" width="300" height="300">
-          <circle class="progress-circle" cx="150" cy="150" r="140"></circle>
-          <circle
-            id="circle1"
-            class="progress-circle"
-            cx="150"
-            cy="150"
-            r="140"
-            style="
-              stroke: url(#gradient1);
-              stroke-width: 16px;
-              stroke-linecap: round;
-            "
-          ></circle>
-          <defs>
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color: red" />
-              <stop offset="50%" style="stop-color: orange" />
-              <stop offset="100%" style="stop-color: rgb(29, 209, 94)" />
-            </linearGradient>
-          </defs>
-        </svg>
+    <div class="middleKnobs">
+      <div class="knob-surround">
+        <div id="knob" class="knob"></div>
+        <span class="min">Min</span>
+        <span class="max">Max</span>
+        <div id="tickContainer" class="ticks"></div>
       </div>
 
       <!--Horizontal Slider-->
@@ -75,49 +50,20 @@
           <span class="switchButton"></span>
         </label>
       </div>
-      
-    <!--Rotary Dial 2-->
-      <div class="slider2">
-        <div class="knob">
-          <div class="rotator">
-            <div class="text">0</div>
-          </div>
-          <div class="pointer">
-            <span class="material-icons"> play_arrow </span>
-          </div>
-        </div>
 
-        <svg class="progress-bar" width="300" height="300">
-          <circle class="progress-circle" cx="150" cy="150" r="140"></circle>
-          <circle
-            id="circle2"
-            class="progress-circle"
-            cx="150"
-            cy="150"
-            r="140"
-            style="
-              stroke: url(#gradient2);
-              stroke-width: 16px;
-              stroke-linecap: round;
-            "
-          ></circle>
-          <defs>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color: red" />
-              <stop offset="50%" style="stop-color: orange" />
-              <stop offset="100%" style="stop-color: rgb(29, 209, 94)" />
-            </linearGradient>
-          </defs>
-        </svg>
+      <div class="knob-surround">
+        <div id="knob2" class="knob"></div>
+        <span class="min">Min</span>
+        <span class="max">Max</span>
+        <div id="tickContainer2" class="ticks"></div>
       </div>
     </div>
 
     <!--2 Regular Buttons-->
     <div class="bottomControls">
-      <button id="firstButton">Button 1</button>
-      <button id="secondButton">Button 2</button>
+      <button id="firstButton">1</button>
+      <button id="secondButton">2</button>
     </div>
-
 
     <!--Stop Button-->
     <div class="bottomMenu">
