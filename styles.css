@@ -98,7 +98,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: row; /* Arrange sliders Horizontally */
-  margin-bottom: -7rem;
+  margin-bottom: -6rem;
   border-bottom: 10px solid rgb(187, 102, 102);
   border-top: 10px solid rgb(187, 102, 102);
 }
