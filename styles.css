@@ -59,7 +59,7 @@ body {
 .bottomMenu {
   text-align: right;
   margin-top: 4rem;
-  margin-right: 1rem;
+  margin-left: 2rem;
 }
 .bottomMenu button {
   width: 7rem;

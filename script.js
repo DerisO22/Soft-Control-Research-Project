@@ -1,5 +1,6 @@
 // Time Loop Running For All the Tasks
 // Run
+let toggleIndex = 0;
 let timer = 0;
 let lastTime = Date.now();
 let running = false;
@@ -9,26 +10,49 @@ let resetButton = document.getElementById('reset');
 let stopButton = document.getElementById('stop');
 let timeOutput = document.getElementById('outputTime');
 
+startButton.style.display = "block"
+stopButton.style.display = "none"
+resetButton.style.display = "none"
+
 startButton.addEventListener('click', () => {
-  running = true;
-  console.log("start")
-})
+    toggleIndex++;
+    switch(toggleIndex){
+        case 0:
+            startButton.style.display = "block"
+            stopButton.style.display = "none"
+            resetButton.style.display = "none"
+            break;
+        case 1:
+            running = true;
+            stopButton.style.display = "block"
+            startButton.style.display = "none"
+            resetButton.style.display = "none"
+            break;
+    }
+});
 
 stopButton.addEventListener('click', () => {
-  running = false;
-  console.log("Stop")
-})
+    running = false;
+    toggleIndex++;
+    if(toggleIndex == 2){
+        resetButton.style.display = "block"
+        startButton.style.display = "none"
+        stopButton.style.display = "none"
+    }
+});
 
 resetButton.addEventListener('click', () => {
-  timer = 0;
-  timeOutput.textContent = (timer / 1000).toFixed(1) + 's';
-  console.log("Reset")
-})
+    timer = 0;
+    timeOutput.textContent = (timer / 1000).toFixed(1) + 's';
+    toggleIndex = 0;
+    startButton.style.display = "block"
+    stopButton.style.display = "none"
+    resetButton.style.display = "none"
+});
 
 /**
  * Rotary Dials
  */
-
 let knobPositionX;
 let knobPositionY;
 let mouseX;
@@ -263,64 +287,43 @@ main();
 /**
  * Test Creation
  */
-let numTests = 8;
-// let tests = {
-//   dialTest,
-//   buttonTest1,
-//   buttonTest2,
-//   slider
-// }
+let numTests = 10;
 let passedTests = [];
-
+// Set all to false to start
 for(let i = 0; i < numTests; i++){
-  passedTests[i] = false
+    passedTests[i] = false
 }
 
-//Hardcoded Tests
-/**
- * Test 1
- */
+// Initial Values(Will Change After Each Test)
+// Only For knobs and slider
+randomTestValues = {
+    knobValue1: Math.floor(Math.random() * 100),
+    knobValue2: Math.floor(Math.random() * 100),
+    sliderValue: Math.floor(Math.random() * 100),
+}
 
-/**
- * Test 2
- */
+// Randomly Shown Tests
+let testPrompts = [
+    `Turn Left Knob To ${randomTestValues.knobValue1}`,
+    `Turn Right Knob To ${randomTestValues.knobValue2}`,
+    `Slide Slider To ${randomTestValues.sliderValue}`,
+    `Click Button 1`,
+    `Click Button 2`,
+    `Flip The Lever`
+]
 
-/**
- * Test 3
- */
-
-/**
- * Test 4
- */
-
-/**
- * Test 5
- */
-
-//Dynamically Coded Tests
-
-/**
- * Buttons
- */
-
-/**
- * Slider
- */
-
-/**
- * Toggle Switch
- */
+// Tests Will have to be dyanmically Created
 
 let tick = () => {
-  const now = Date.now();
-  const deltaTime = now - lastTime;
-  lastTime = now;
+    const now = Date.now();
+    const deltaTime = now - lastTime;
+    lastTime = now;
 
-  if(running){
-    timer += deltaTime;
-    timeOutput.textContent = (timer / 1000).toFixed(1) + 's';
-  }
+    if(running){
+        timer += deltaTime;
+        timeOutput.textContent = (timer / 1000).toFixed(1) + 's';
+    }
 
-  window.requestAnimationFrame(tick);
+    window.requestAnimationFrame(tick);
 }
 tick();
