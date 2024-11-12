@@ -5,10 +5,52 @@ let timer = 0;
 let lastTime = Date.now();
 let running = false;
 
+/**
+ * Test Creation
+ */
+let numTests = 10;
+let passedTests = [];
+// Set all to false to start
+for(let i = 0; i < numTests; i++){
+    passedTests[i] = false
+}
+
+// Initial Values(Will Change After Each Test)
+// Only For knobs and slider
+randomTestValues = {
+    knobValue1: Math.floor(Math.random() * 100),
+    knobValue2: Math.floor(Math.random() * 100),
+    sliderValue: Math.floor(Math.random() * 100),
+    // Test Index For 6 controls
+    randomTestIndex: Math.floor(Math.random() * 6)
+}
+
+// Randomly Shown Tests
+let testPrompts = [
+    `Turn Left Knob To ${randomTestValues.knobValue1}`,
+    `Turn Right Knob To ${randomTestValues.knobValue2}`,
+    `Slide Slider To ${randomTestValues.sliderValue}`,
+    `Click Button 1`,
+    `Click Button 2`,
+    `Flip The Lever`
+]
+
+// Constantly Check Tests Within Tick Function - Knobs and Slider
+// Also keep track of errors and time
+let totalErrors = 0;
+
+// Event Listeners For the Button Controls
+let button1 = document.getElementById("firstButton");
+let button2 = document.getElementById("secondButton");
+let switchControl = document.querySelector('.switchButton');
+let promptTaskText = document.querySelector('.testText');
+
 let startButton = document.getElementById('start');
 let resetButton = document.getElementById('reset');
 let stopButton = document.getElementById('stop');
 let timeOutput = document.getElementById('outputTime');
+let horizontalSliderOutput = document.getElementById('sliderValue')
+let horizontalSlider = document.querySelector('.horizontalSlider')
 
 startButton.style.display = "block"
 stopButton.style.display = "none"
@@ -51,7 +93,7 @@ resetButton.addEventListener('click', () => {
 });
 
 /**
- * Rotary Dials
+ * Rotary Knobs
  */
 let knobPositionX;
 let knobPositionY;
@@ -285,39 +327,52 @@ function getMouseMove(){
 main();
 
 /**
- * Test Creation
+ * Actual Testing For The Button Controls and Slider
+ * lever, button1, and button2, horizontal slider
+ * 
+ * Knob tests above in knobs section
+ * 
  */
-let numTests = 10;
-let passedTests = [];
-// Set all to false to start
-for(let i = 0; i < numTests; i++){
-    passedTests[i] = false
-}
+button1.addEventListener('click', () => {
+    // If any of these buttons are clicked during another task, add an error
+    // Else they correctly did a task
+    if(testPrompts[randomTestValues.randomTestIndex] != `Click Button 1`){
+        console.log("Error");
+    } else {
+        console.log("Passed Test")
+    }
+});
 
-// Initial Values(Will Change After Each Test)
-// Only For knobs and slider
-randomTestValues = {
-    knobValue1: Math.floor(Math.random() * 100),
-    knobValue2: Math.floor(Math.random() * 100),
-    sliderValue: Math.floor(Math.random() * 100),
-}
+button2.addEventListener('click', () => {
+    if(testPrompts[randomTestValues.randomTestIndex] != `Click Button 2`){
+        console.log("Error");
+    } else {
+        console.log("Passed Test")
+    }
+});
 
-// Randomly Shown Tests
-let testPrompts = [
-    `Turn Left Knob To ${randomTestValues.knobValue1}`,
-    `Turn Right Knob To ${randomTestValues.knobValue2}`,
-    `Slide Slider To ${randomTestValues.sliderValue}`,
-    `Click Button 1`,
-    `Click Button 2`,
-    `Flip The Lever`
-]
+switchControl.addEventListener('click', () => {
+    if(testPrompts[randomTestValues.randomTestIndex] != `Flip The Lever`){
+        console.log("Error");
+    } else {
+        console.log("Passed Test")
+    }
+});
 
-// Tests Will have to be dyanmically Created
+function outputTest(){
+    promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
+};
+
+outputTest();
 
 let tick = () => {
     const now = Date.now();
     const deltaTime = now - lastTime;
     lastTime = now;
+
+    horizontalSliderOutput.innerHTML = horizontalSlider.value;
+
+    // Constant checks for the tests depending on the randomly chosen test
 
     if(running){
         timer += deltaTime;

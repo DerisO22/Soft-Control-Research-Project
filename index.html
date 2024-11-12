@@ -20,9 +20,10 @@
   <body>
     <!--Timer and Start Button-->
     <div class="topMenu">
-      <p id="outputTime">Time Output</p>
+      <p class="testText">Prompt Text</p>
       <p>Current volume: <span id="volumeValue" class="current-value">0%</span></p>
       <p>Current volume: <span id="volumeValue2" class="current-value2">0%</span></p>
+      <p id="sliderValue">Slider Value</p>
     </div>
 
     <div class="middleKnobs">
@@ -37,7 +38,6 @@
       <div class="middleControls">
         <!--Horizontal Slider-->
         <div class="slidecontainer">
-          <p id="sliderValue">Slider Value</p>
           <input class="horizontalSlider" type="range" min="1" max="100" value="50">
         </div>
 
@@ -68,6 +68,8 @@
       <button id="reset">Reset Timer</button>
       <button id="stop">Stop Timer</button>
     </div>
+
+    <p id="outputTime">Time Output</p>
 
     <script src="script.js"></script>
   </body>
