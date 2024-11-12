@@ -44,13 +44,15 @@ let button1 = document.getElementById("firstButton");
 let button2 = document.getElementById("secondButton");
 let switchControl = document.querySelector('.switchButton');
 let promptTaskText = document.querySelector('.testText');
+let volumeValue1 = document.getElementById("volumeValue");
+let volumeValue2 = document.getElementById("volumeValue");
 
 let startButton = document.getElementById('start');
 let resetButton = document.getElementById('reset');
 let stopButton = document.getElementById('stop');
 let timeOutput = document.getElementById('outputTime');
-let horizontalSliderOutput = document.getElementById('sliderValue')
-let horizontalSlider = document.querySelector('.horizontalSlider')
+let horizontalSliderOutput = document.getElementById('sliderValue');
+let horizontalSlider = document.querySelector('.horizontalSlider');
 
 startButton.style.display = "block"
 stopButton.style.display = "none"
@@ -130,6 +132,9 @@ function main(){
 
 //on mouse button down
 function onMouseDown1(){
+    if(testPrompts[randomTestValues.randomTestIndex] != `Turn Left Knob To ${randomTestValues.knobValue1}`){
+        console.log("Error");
+    }
     //start audio if not already playing
     if(audio1.paused == true){
         //mobile users must tap anywhere to start audio
@@ -147,6 +152,9 @@ function onMouseDown1(){
 }
 
 function onMouseDown2(){
+    if(testPrompts[randomTestValues.randomTestIndex] != `Turn Right Knob To ${randomTestValues.knobValue2}`){
+        console.log("Error");
+    }
     //start audio if not already playing
     if(audio2.paused == true){
         //mobile users must tap anywhere to start audio
@@ -210,7 +218,7 @@ function onMouseMove1(event){
             tickHighlightPosition = Math.round((volumeSetting * 2.7) / 10);
             createTicks(27, tickHighlightPosition, 1); 
             //audio1.volume = volumeSetting / 100; 
-            document.getElementById("volumeValue").innerHTML = volumeSetting + "%"; 
+            document.getElementById("volumeValue").innerHTML = volumeSetting; 
         }
     }
 }
@@ -249,7 +257,7 @@ function onMouseMove2(event){
             tickHighlightPosition = Math.round((volumeSetting * 2.7) / 10); 
             createTicks(27, tickHighlightPosition, 2); 
             //audio2.volume = volumeSetting / 100; 
-            document.getElementById("volumeValue2").innerHTML = volumeSetting + "%"; 
+            document.getElementById("volumeValue2").innerHTML = volumeSetting; 
         }
     }
 }
@@ -359,6 +367,14 @@ switchControl.addEventListener('click', () => {
     }
 });
 
+horizontalSlider.addEventListener('click', () => {
+    if(testPrompts[randomTestValues.randomTestIndex] != `Slide Slider To ${randomTestValues.sliderValue}`){
+        console.log("Error");
+    } else {
+        console.log("Passed Test")
+    }
+});
+
 function outputTest(){
     promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
 };
@@ -373,6 +389,16 @@ let tick = () => {
     horizontalSliderOutput.innerHTML = horizontalSlider.value;
 
     // Constant checks for the tests depending on the randomly chosen test
+    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}` && volumeSetting == randomTestValues.knobValue2) {
+        console.log("Passed Test right");
+        passedTests[randomTestValues.randomTestIndex] = true;
+        //updateTestPrompt();
+    }
+    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}` && volumeSetting == randomTestValues.knobValue1) {
+        console.log("Passed Test left");
+        passedTests[randomTestValues.randomTestIndex] = true;
+        //updateTestPrompt();
+    }
 
     if(running){
         timer += deltaTime;
