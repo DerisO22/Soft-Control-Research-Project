@@ -10,19 +10,20 @@ let running = false;
  */
 let numTests = 10;
 let passedTests = [];
+let passedTestIndex = -1;
 // Set all to false to start
 for(let i = 0; i < numTests; i++){
-    passedTests[i] = false
+    passedTests[i] = false;
 }
 
 // Initial Values(Will Change After Each Test)
 // Only For knobs and slider
 randomTestValues = {
-    knobValue1: Math.floor(Math.random() * 100),
-    knobValue2: Math.floor(Math.random() * 100),
-    sliderValue: Math.floor(Math.random() * 100),
+    knobValue1: 0,
+    knobValue2: 0,
+    sliderValue: 0,
     // Test Index For 6 controls
-    randomTestIndex: Math.floor(Math.random() * 6)
+    randomTestIndex: 0
 }
 
 // Randomly Shown Tests
@@ -133,7 +134,8 @@ function main(){
 //on mouse button down
 function onMouseDown1(){
     if(testPrompts[randomTestValues.randomTestIndex] != `Turn Left Knob To ${randomTestValues.knobValue1}`){
-        console.log("Error");
+        totalErrors++;
+        console.log(`Errors: ${totalErrors}`);
     }
     //start audio if not already playing
     if(audio1.paused == true){
@@ -153,7 +155,8 @@ function onMouseDown1(){
 
 function onMouseDown2(){
     if(testPrompts[randomTestValues.randomTestIndex] != `Turn Right Knob To ${randomTestValues.knobValue2}`){
-        console.log("Error");
+        totalErrors++;
+        console.log(`Errors: ${totalErrors}`);
     }
     //start audio if not already playing
     if(audio2.paused == true){
@@ -341,43 +344,80 @@ main();
  * Knob tests above in knobs section
  * 
  */
-button1.addEventListener('click', () => {
-    // If any of these buttons are clicked during another task, add an error
-    // Else they correctly did a task
-    if(testPrompts[randomTestValues.randomTestIndex] != `Click Button 1`){
-        console.log("Error");
-    } else {
-        console.log("Passed Test")
-    }
-});
+function outputTest() {
+    // Generate random values (you already have this)
+    randomTestValues.knobValue1 = Math.floor(Math.random() * 100);
+    randomTestValues.knobValue2 = Math.floor(Math.random() * 100);
+    randomTestValues.sliderValue = Math.floor(Math.random() * 100);
+    randomTestValues.randomTestIndex = Math.floor(Math.random() * 6);
 
-button2.addEventListener('click', () => {
-    if(testPrompts[randomTestValues.randomTestIndex] != `Click Button 2`){
-        console.log("Error");
-    } else {
-        console.log("Passed Test")
-    }
-});
+    testPrompts[0] = `Turn Left Knob To ${randomTestValues.knobValue1}`
+    testPrompts[1] = `Turn Right Knob To ${randomTestValues.knobValue2}`
+    testPrompts[2] = `Slide Slider To ${randomTestValues.sliderValue}`
 
-switchControl.addEventListener('click', () => {
-    if(testPrompts[randomTestValues.randomTestIndex] != `Flip The Lever`){
-        console.log("Error");
-    } else {
-        console.log("Passed Test")
+    if(passedTests[testPrompts.length - 1] == true){
+        showDataDownload();
     }
-});
-
-horizontalSlider.addEventListener('click', () => {
-    if(testPrompts[randomTestValues.randomTestIndex] != `Slide Slider To ${randomTestValues.sliderValue}`){
-        console.log("Error");
-    } else {
-        console.log("Passed Test")
-    }
-});
-
-function outputTest(){
+  
+    // Update the test prompt
     promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
+
+    passedTestIndex++;
+    console.log(passedTests);
 };
+
+function showDataDownload(){
+    console.log("Download the CSV File By Clicking the Button");
+}
+
+// ... (rest of your code)
+
+// Button 1 Event Listener
+button1.addEventListener('click', () => {
+    // Check if the clicked button matches the current test
+    if (testPrompts[randomTestValues.randomTestIndex] == `Click Button 1`) {
+        console.log("Passed Test Button 1");
+        passedTests[passedTestIndex] = true;
+        // Update the prompt only if the test is passed
+        outputTest(); 
+    } else {
+        totalErrors++;
+        console.log(`Errors: ${totalErrors}`);
+    }
+  });
+  
+  // Button 2 Event Listener
+  button2.addEventListener('click', () => {
+    if (testPrompts[randomTestValues.randomTestIndex] == `Click Button 2`) {
+      console.log("Passed Test Button 2");
+      passedTests[passedTestIndex] = true;
+      outputTest(); 
+    } else {
+        totalErrors++;
+        console.log(`Errors: ${totalErrors}`);
+    }
+  });
+  
+  // Switch Event Listener
+  switchControl.addEventListener('click', () => {
+    if (testPrompts[randomTestValues.randomTestIndex] == `Flip The Lever`) {
+      console.log("Passed Test Switch");
+      passedTests[passedTestIndex] = true;
+      outputTest(); 
+    } else {
+        totalErrors++;
+        console.log(`Errors: ${totalErrors}`);
+    }
+  });
+  
+  // Horizontal Slider Event Listener
+  horizontalSlider.addEventListener('click', () => {
+    if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}`) {
+    } else {
+        totalErrors++;
+        console.log(`Errors: ${totalErrors}`);
+    }
+  });
 
 outputTest();
 
@@ -391,13 +431,18 @@ let tick = () => {
     // Constant checks for the tests depending on the randomly chosen test
     if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}` && volumeSetting == randomTestValues.knobValue2) {
         console.log("Passed Test right");
-        passedTests[randomTestValues.randomTestIndex] = true;
-        //updateTestPrompt();
+        passedTests[passedTestIndex] = true;
+        outputTest();
     }
     if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}` && volumeSetting == randomTestValues.knobValue1) {
         console.log("Passed Test left");
-        passedTests[randomTestValues.randomTestIndex] = true;
-        //updateTestPrompt();
+        passedTests[passedTestIndex] = true;
+        outputTest();
+    }
+    if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}` && horizontalSliderOutput.innerHTML == randomTestValues.sliderValue) {
+        console.log("Passed Test left");
+        passedTests[passedTestIndex] = true;
+        outputTest();
     }
 
     if(running){
