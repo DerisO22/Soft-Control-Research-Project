@@ -62,9 +62,26 @@ body {
   margin-left: 2rem;
 }
 .bottomMenu button {
-  width: 7rem;
+  width: 8rem;
   height: 5rem;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+.downloadContainer {
+  margin-top: -5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; /* Arrange sliders Horizontally */
+}
+.downloadContainer button:hover {
+  background-color: #2196F3;
+  transform: translateY(-5px);
+}
+.downloadContainer button:active {
+  background-color: #2196F3;
+  transform: translateY(5px);
 }
 /* Stop Button */
 #stop {

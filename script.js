@@ -54,10 +54,14 @@ let stopButton = document.getElementById('stop');
 let timeOutput = document.getElementById('outputTime');
 let horizontalSliderOutput = document.getElementById('sliderValue');
 let horizontalSlider = document.querySelector('.horizontalSlider');
+let downloadCSVButton = document.querySelector('.downloadCSV');
+let downloadTXTButton = document.querySelector('.downloadRawData');
 
 startButton.style.display = "block"
 stopButton.style.display = "none"
 resetButton.style.display = "none"
+downloadCSVButton.style.display = "none"
+downloadTXTButton.style.display = "none"
 
 startButton.addEventListener('click', () => {
     toggleIndex++;
@@ -355,7 +359,7 @@ function outputTest() {
     testPrompts[1] = `Turn Right Knob To ${randomTestValues.knobValue2}`
     testPrompts[2] = `Slide Slider To ${randomTestValues.sliderValue}`
 
-    if(passedTests[testPrompts.length - 1] == true){
+    if(passedTests[passedTests.length - 1] == true){
         showDataDownload();
     }
   
@@ -368,6 +372,8 @@ function outputTest() {
 
 function showDataDownload(){
     console.log("Download the CSV File By Clicking the Button");
+    downloadCSVButton.style.display = "block"
+    downloadTXTButton.style.display = "block"
 }
 
 // ... (rest of your code)

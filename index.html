@@ -38,7 +38,7 @@
       <div class="middleControls">
         <!--Horizontal Slider-->
         <div class="slidecontainer">
-          <input class="horizontalSlider" type="range" min="1" max="100" value="50">
+          <input class="horizontalSlider" type="range" min="0" max="100" value="50">
         </div>
 
         <!--Toggle Button-->
@@ -64,10 +64,14 @@
 
     <!--Stop Button-->
     <div class="bottomMenu">
+      <p id="outputTime">Time Output</p>
       <button id="start">Start Timer</button>
       <button id="reset">Reset Timer</button>
       <button id="stop">Stop Timer</button>
-      <p id="outputTime">Time Output</p>
+      <div class="downloadContainer">
+        <button class="downloadCSV">Download .csv</button>
+        <button class="downloadRawData">Download .txt</button>
+      </div>
     </div>
 
     <script src="script.js"></script>
