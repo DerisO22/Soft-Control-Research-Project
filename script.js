@@ -342,6 +342,12 @@ function getMouseMove(){
 main();
 
 /**
+ * CSV File Handling and Parsing
+ */
+// Using an array of objects and array of arrays
+const products = [["Task", "Errors", "Time"]];
+
+/**
  * Actual Testing For The Button Controls and Slider
  * lever, button1, and button2, horizontal slider
  * 
@@ -361,13 +367,36 @@ function outputTest() {
 
     if(passedTests[passedTests.length - 1] == true){
         showDataDownload();
+        const productValuesArrays = products.map(product => Object.values(product));
+        productValuesArrays.unshift(Object.keys(products));
+
+        const csvContent = "data:text/csv;charset=utf-8," 
+            + productValuesArrays.map(row => row.join(",")).join("\n");
+
+        const encodedUri = encodeURI(csvContent);
+
+        downloadCSVButton.setAttribute("href", encodedUri);
+        downloadCSVButton.setAttribute("download", "researchData.csv");
+
+        downloadCSVButton.click();
     }
+
+    // Push the csv object data and change values
+    const csvDataObject = {
+        task: passedTestIndex + 1,
+        errors: totalErrors,
+        time: timer
+    }
+
+    products.push(csvDataObject);
   
     // Update the test prompt
     promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
 
     passedTestIndex++;
     console.log(passedTests);
+    console.log(products)
+
 };
 
 function showDataDownload(){
