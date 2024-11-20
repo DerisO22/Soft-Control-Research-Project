@@ -20,11 +20,13 @@
   <body>
     <!--Timer and Start Button-->
     <div class="topMenu">
-      <p class="testText">Prompt Text</p>
-      <p>Current volume: <span id="volumeValue" class="current-value">0</span></p>
-      <p>Current volume: <span id="volumeValue2" class="current-value2">0</span></p>
-      <p id="sliderValue">Slider Value</p>
-    </div>
+      <div class="text-container">
+          <p class="testText">Prompt Text</p>
+          <p id="volumeOutput">Current volume: <strong><span id="volumeValue" class="current-value">0</span></strong></p>
+          <p id="volumeOutput2">Current volume: <strong><span id="volumeValue2" class="current-value2">0</span></strong></p>
+          <p id="sliderValue"></p>
+      </div>
+  </div>
 
     <div class="middleKnobs">
       <div class="knob-surround">
@@ -64,10 +66,10 @@
 
     <!--Stop Button-->
     <div class="bottomMenu">
-      <p id="outputTime">Time Output</p>
+      <!-- <p id="outputTime">Time Output</p>
       <button id="start">Start Timer</button>
       <button id="reset">Reset Timer</button>
-      <button id="stop">Stop Timer</button>
+      <button id="stop">Stop Timer</button> -->
       <div class="downloadContainer">
         <button class="downloadCSV">Download .csv</button>
         <button class="downloadRawData">Download .txt</button>

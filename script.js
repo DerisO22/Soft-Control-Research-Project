@@ -47,6 +47,8 @@ let switchControl = document.querySelector('.switchButton');
 let promptTaskText = document.querySelector('.testText');
 let volumeValue1 = document.getElementById("volumeValue");
 let volumeValue2 = document.getElementById("volumeValue");
+let volumeOutput1 = document.getElementById('volumeOutput');
+let volumeOutput2 = document.getElementById('volumeOutput2');
 
 let startButton = document.getElementById('start');
 let resetButton = document.getElementById('reset');
@@ -57,47 +59,47 @@ let horizontalSlider = document.querySelector('.horizontalSlider');
 let downloadCSVButton = document.querySelector('.downloadCSV');
 let downloadTXTButton = document.querySelector('.downloadRawData');
 
-startButton.style.display = "block"
-stopButton.style.display = "none"
-resetButton.style.display = "none"
+// startButton.style.display = "block"
+// stopButton.style.display = "none"
+// resetButton.style.display = "none"
 downloadCSVButton.style.display = "none"
 downloadTXTButton.style.display = "none"
 
-startButton.addEventListener('click', () => {
-    toggleIndex++;
-    switch(toggleIndex){
-        case 0:
-            startButton.style.display = "block"
-            stopButton.style.display = "none"
-            resetButton.style.display = "none"
-            break;
-        case 1:
-            running = true;
-            stopButton.style.display = "block"
-            startButton.style.display = "none"
-            resetButton.style.display = "none"
-            break;
-    }
-});
+// startButton.addEventListener('click', () => {
+//     toggleIndex++;
+//     switch(toggleIndex){
+//         case 0:
+//             startButton.style.display = "block"
+//             stopButton.style.display = "none"
+//             resetButton.style.display = "none"
+//             break;
+//         case 1:
+//             running = true;
+//             stopButton.style.display = "block"
+//             startButton.style.display = "none"
+//             resetButton.style.display = "none"
+//             break;
+//     }
+// });
 
-stopButton.addEventListener('click', () => {
-    running = false;
-    toggleIndex++;
-    if(toggleIndex == 2){
-        resetButton.style.display = "block"
-        startButton.style.display = "none"
-        stopButton.style.display = "none"
-    }
-});
+// stopButton.addEventListener('click', () => {
+//     running = false;
+//     toggleIndex++;
+//     if(toggleIndex == 2){
+//         resetButton.style.display = "block"
+//         startButton.style.display = "none"
+//         stopButton.style.display = "none"
+//     }
+// });
 
-resetButton.addEventListener('click', () => {
-    timer = 0;
-    timeOutput.textContent = (timer / 1000).toFixed(1) + 's';
-    toggleIndex = 0;
-    startButton.style.display = "block"
-    stopButton.style.display = "none"
-    resetButton.style.display = "none"
-});
+// resetButton.addEventListener('click', () => {
+//     timer = 0;
+//     timeOutput.textContent = (timer / 1000).toFixed(1) + 's';
+//     toggleIndex = 0;
+//     startButton.style.display = "block"
+//     stopButton.style.display = "none"
+//     resetButton.style.display = "none"
+// });
 
 /**
  * Rotary Knobs
@@ -180,6 +182,22 @@ function onMouseDown2(){
 
 //on mouse button release
 function onMouseUp(){
+    // Constant checks for the tests depending on the randomly chosen test
+    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}` && volumeSetting == randomTestValues.knobValue2) {
+        console.log("Passed Test right");
+        passedTests[passedTestIndex] = true;
+        outputTest();
+    }
+    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}` && volumeSetting == randomTestValues.knobValue1) {
+        console.log("Passed Test left");
+        passedTests[passedTestIndex] = true;
+        outputTest();
+    }
+    if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}` && horizontalSliderOutput.innerHTML == `Slider Value: ${horizontalSlider.value}`) {
+        console.log("Passed Test left");
+        passedTests[passedTestIndex] = true;
+        outputTest();
+    }
     document.removeEventListener(getMouseMove(), onMouseMove1); 
     document.removeEventListener(getMouseMove(), onMouseMove2); 
 }
@@ -393,10 +411,28 @@ function outputTest() {
     // Update the test prompt
     promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
 
+    // Show values depending on the test
+    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}`) {
+        volumeOutput.style.display = "block";
+        volumeOutput2.style.display = "none";
+        horizontalSliderOutput.style.display = "none";
+    } else if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}`) {
+        volumeOutput2.style.display = "block";
+        volumeOutput.style.display = "none";
+        horizontalSliderOutput.style.display = "none";
+    } else if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}`) {
+        horizontalSliderOutput.style.display = "block";
+        volumeOutput2.style.display = "none";
+        volumeOutput.style.display = "none";
+    } else { 
+        horizontalSliderOutput.style.display = "none";
+        volumeOutput2.style.display = "none";
+        volumeOutput.style.display = "none";
+    }
+
     passedTestIndex++;
     console.log(passedTests);
     console.log(products)
-
 };
 
 function showDataDownload(){
@@ -404,8 +440,6 @@ function showDataDownload(){
     downloadCSVButton.style.display = "block"
     downloadTXTButton.style.display = "block"
 }
-
-// ... (rest of your code)
 
 // Button 1 Event Listener
 button1.addEventListener('click', () => {
@@ -461,24 +495,7 @@ let tick = () => {
     const deltaTime = now - lastTime;
     lastTime = now;
 
-    horizontalSliderOutput.innerHTML = horizontalSlider.value;
-
-    // Constant checks for the tests depending on the randomly chosen test
-    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}` && volumeSetting == randomTestValues.knobValue2) {
-        console.log("Passed Test right");
-        passedTests[passedTestIndex] = true;
-        outputTest();
-    }
-    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}` && volumeSetting == randomTestValues.knobValue1) {
-        console.log("Passed Test left");
-        passedTests[passedTestIndex] = true;
-        outputTest();
-    }
-    if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}` && horizontalSliderOutput.innerHTML == randomTestValues.sliderValue) {
-        console.log("Passed Test left");
-        passedTests[passedTestIndex] = true;
-        outputTest();
-    }
+    horizontalSliderOutput.innerHTML = `Slider Value: ${horizontalSlider.value}`;
 
     if(running){
         timer += deltaTime;
