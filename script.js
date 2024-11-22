@@ -8,7 +8,7 @@ let running = false;
 /**
  * Test Creation
  */
-let numTests = 10;
+let numTests = 5;
 let passedTests = [];
 let passedTestIndex = -1;
 // Set all to false to start
@@ -21,7 +21,7 @@ for(let i = 0; i < numTests; i++){
 randomTestValues = {
     knobValue1: 0,
     knobValue2: 0,
-    sliderValue: 0,
+    //sliderValue: 0,
     // Test Index For 6 controls
     randomTestIndex: 0
 }
@@ -30,10 +30,10 @@ randomTestValues = {
 let testPrompts = [
     `Turn Left Knob To ${randomTestValues.knobValue1}`,
     `Turn Right Knob To ${randomTestValues.knobValue2}`,
-    `Slide Slider To ${randomTestValues.sliderValue}`,
+    //`Slide Slider To ${randomTestValues.sliderValue}`,
     `Click Button 1`,
-    `Click Button 2`,
-    `Flip The Lever`
+    `Click Button 2`
+    //`Flip The Lever`
 ]
 
 // Constantly Check Tests Within Tick Function - Knobs and Slider
@@ -50,20 +50,21 @@ let volumeValue2 = document.getElementById("volumeValue");
 let volumeOutput1 = document.getElementById('volumeOutput');
 let volumeOutput2 = document.getElementById('volumeOutput2');
 
-let startButton = document.getElementById('start');
-let resetButton = document.getElementById('reset');
-let stopButton = document.getElementById('stop');
-let timeOutput = document.getElementById('outputTime');
-let horizontalSliderOutput = document.getElementById('sliderValue');
-let horizontalSlider = document.querySelector('.horizontalSlider');
+// let startButton = document.getElementById('start');
+// let resetButton = document.getElementById('reset');
+// let stopButton = document.getElementById('stop');
+// let timeOutput = document.getElementById('outputTime');
+//let horizontalSliderOutput = document.getElementById('sliderValue');
+//let horizontalSlider = document.querySelector('.horizontalSlider');
 let downloadCSVButton = document.querySelector('.downloadCSV');
 let downloadTXTButton = document.querySelector('.downloadRawData');
+let txtData = "";
 
 // startButton.style.display = "block"
 // stopButton.style.display = "none"
 // resetButton.style.display = "none"
-downloadCSVButton.style.display = "none"
-downloadTXTButton.style.display = "none"
+downloadCSVButton.style.display = "none";
+downloadTXTButton.style.display = "none";
 
 // startButton.addEventListener('click', () => {
 //     toggleIndex++;
@@ -376,34 +377,22 @@ function outputTest() {
     // Generate random values (you already have this)
     randomTestValues.knobValue1 = Math.floor(Math.random() * 100);
     randomTestValues.knobValue2 = Math.floor(Math.random() * 100);
-    randomTestValues.sliderValue = Math.floor(Math.random() * 100);
-    randomTestValues.randomTestIndex = Math.floor(Math.random() * 6);
+    // randomTestValues.sliderValue = Math.floor(Math.random() * 100);
+    randomTestValues.randomTestIndex = Math.floor(Math.random() * 4);
 
     testPrompts[0] = `Turn Left Knob To ${randomTestValues.knobValue1}`
     testPrompts[1] = `Turn Right Knob To ${randomTestValues.knobValue2}`
-    testPrompts[2] = `Slide Slider To ${randomTestValues.sliderValue}`
+    // testPrompts[2] = `Slide Slider To ${randomTestValues.sliderValue}`
 
     if(passedTests[passedTests.length - 1] == true){
         showDataDownload();
-        const productValuesArrays = products.map(product => Object.values(product));
-        productValuesArrays.unshift(Object.keys(products));
-
-        const csvContent = "data:text/csv;charset=utf-8," 
-            + productValuesArrays.map(row => row.join(",")).join("\n");
-
-        const encodedUri = encodeURI(csvContent);
-
-        downloadCSVButton.setAttribute("href", encodedUri);
-        downloadCSVButton.setAttribute("download", "researchData.csv");
-
-        downloadCSVButton.click();
     }
 
     // Push the csv object data and change values
     const csvDataObject = {
         task: passedTestIndex + 1,
         errors: totalErrors,
-        time: timer
+        time: (timer / 360).toFixed(3)
     }
 
     products.push(csvDataObject);
@@ -415,17 +404,17 @@ function outputTest() {
     if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}`) {
         volumeOutput.style.display = "block";
         volumeOutput2.style.display = "none";
-        horizontalSliderOutput.style.display = "none";
+        //horizontalSliderOutput.style.display = "none";
     } else if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}`) {
         volumeOutput2.style.display = "block";
         volumeOutput.style.display = "none";
-        horizontalSliderOutput.style.display = "none";
-    } else if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}`) {
-        horizontalSliderOutput.style.display = "block";
-        volumeOutput2.style.display = "none";
-        volumeOutput.style.display = "none";
+        //horizontalSliderOutput.style.display = "none";
+    // } else if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}`) {
+    //     //horizontalSliderOutput.style.display = "block";
+    //     volumeOutput2.style.display = "none";
+    //     volumeOutput.style.display = "none";
     } else { 
-        horizontalSliderOutput.style.display = "none";
+        //horizontalSliderOutput.style.display = "none";
         volumeOutput2.style.display = "none";
         volumeOutput.style.display = "none";
     }
@@ -440,6 +429,49 @@ function showDataDownload(){
     downloadCSVButton.style.display = "block"
     downloadTXTButton.style.display = "block"
 }
+
+function downloadCSV() {
+    const csvRows = [];
+    // Add the header row
+    csvRows.push(products[0].join(","));
+    // Iterate through the remaining data rows
+    for (let i = 1; i < products.length; i++) {
+        // Extract values from the object using Object.values()
+        const rowValues = Object.values(products[i]);
+        // Join the values with a comma
+        csvRows.push(rowValues.join(","));
+    }
+    // Join the CSV rows with a newline character
+    const csvContent = "Data Set - Soft Controls" + "\n" + csvRows.join("\n");
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute("href", url);
+    link.setAttribute("download", "researchDataSoft.csv");
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+downloadCSVButton.addEventListener('click', downloadCSV);
+
+function downloadTXT() {
+    const rows = txtData.split("\n");
+    const blob = new Blob(rows, { type: 'text/plain;charset=utf-8' });
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute("href", url);
+    link.setAttribute("download", "researchData.txt");
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+downloadTXTButton.addEventListener('click', downloadTXT);
 
 // Button 1 Event Listener
 button1.addEventListener('click', () => {
@@ -468,25 +500,25 @@ button1.addEventListener('click', () => {
   });
   
   // Switch Event Listener
-  switchControl.addEventListener('click', () => {
-    if (testPrompts[randomTestValues.randomTestIndex] == `Flip The Lever`) {
-      console.log("Passed Test Switch");
-      passedTests[passedTestIndex] = true;
-      outputTest(); 
-    } else {
-        totalErrors++;
-        console.log(`Errors: ${totalErrors}`);
-    }
-  });
+//   switchControl.addEventListener('click', () => {
+//     if (testPrompts[randomTestValues.randomTestIndex] == `Flip The Lever`) {
+//       console.log("Passed Test Switch");
+//       passedTests[passedTestIndex] = true;
+//       outputTest(); 
+//     } else {
+//         totalErrors++;
+//         console.log(`Errors: ${totalErrors}`);
+//     }
+//   });
   
-  // Horizontal Slider Event Listener
-  horizontalSlider.addEventListener('click', () => {
-    if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}`) {
-    } else {
-        totalErrors++;
-        console.log(`Errors: ${totalErrors}`);
-    }
-  });
+//   // Horizontal Slider Event Listener
+//   horizontalSlider.addEventListener('click', () => {
+//     if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}`) {
+//     } else {
+//         totalErrors++;
+//         console.log(`Errors: ${totalErrors}`);
+//     }
+//   });
 
 outputTest();
 
@@ -495,13 +527,15 @@ let tick = () => {
     const deltaTime = now - lastTime;
     lastTime = now;
 
-    horizontalSliderOutput.innerHTML = `Slider Value: ${horizontalSlider.value}`;
+    // horizontalSliderOutput.innerHTML = `Slider Value: ${horizontalSlider.value}`;
 
-    if(running){
-        timer += deltaTime;
-        timeOutput.textContent = (timer / 1000).toFixed(1) + 's';
-    }
-
+    timer += deltaTime;
     window.requestAnimationFrame(tick);
 }
 tick();
+
+// Adjustable Value For txt Data
+setInterval(() => {
+    txtData += `Task ${passedTestIndex + 1} | Time: ${(timer / 360).toFixed(3)}s | Knob1: ${document.getElementById("volumeValue").innerHTML} | Knob2: ${document.getElementById("volumeValue2").innerHTML}\t\t\t\t\t\t\t\n`;
+}, 500);
+
