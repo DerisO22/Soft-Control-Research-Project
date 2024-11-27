@@ -364,7 +364,7 @@ main();
  * CSV File Handling and Parsing
  */
 // Using an array of objects and array of arrays
-const products = [["Task", "Errors", "Time"]];
+const products = [["Task Number", "Task Type", "Initial Value", "Errors", "Time"]];
 
 /**
  * Actual Testing For The Button Controls and Slider
@@ -391,14 +391,25 @@ function outputTest() {
     // Push the csv object data and change values
     const csvDataObject = {
         task: passedTestIndex + 1,
+        taskType: testPrompts[randomTestValues.randomTestIndex],
+        initialValue: document.getElementById("volumeValue2").innerHTML,
         errors: totalErrors,
-        time: (timer / 360).toFixed(3)
+        time: (timer / 1000).toFixed(3)
     }
 
-    products.push(csvDataObject);
+    if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}`) {
+        csvDataObject.initialValue = document.getElementById("volumeValue").innerHTML;
+        //horizontalSliderOutput.style.display = "none";
+    } else if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}`) {
+        csvDataObject.initialValue = document.getElementById("volumeValue2").innerHTML;
+    } else { 
+        //horizontalSliderOutput.style.display = "none";
+        csvDataObject.initialValue = 'none';
+    }
   
     // Update the test prompt
     promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
+    products.push(csvDataObject);
 
     // Show values depending on the test
     if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}`) {
@@ -536,6 +547,6 @@ tick();
 
 // Adjustable Value For txt Data
 setInterval(() => {
-    txtData += `Task ${passedTestIndex + 1} | Time: ${(timer / 360).toFixed(3)}s | Knob1: ${document.getElementById("volumeValue").innerHTML} | Knob2: ${document.getElementById("volumeValue2").innerHTML}\t\t\t\t\t\t\t\n`;
+    txtData += `Task ${passedTestIndex + 1} | Time: ${(timer / 1000).toFixed(3)}s | Knob1: ${document.getElementById("volumeValue").innerHTML} | Knob2: ${document.getElementById("volumeValue2").innerHTML}\t\t\t\t\t\t\t\n`;
 }, 500);
 
