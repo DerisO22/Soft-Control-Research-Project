@@ -118,8 +118,6 @@ let getRadiansInDegrees;
 let finalAngleInDegrees;
 let volumeSetting;
 let tickHighlightPosition;
-let audio1 = new Audio("https://www.cineblueone.com/maskWall/audio/skylar.mp3"); 
-let audio2 = new Audio("https://www.cineblueone.com/maskWall/audio/skylar.mp3"); 
 let startingTickAngle = -135;
 let tickContainer1 = document.getElementById("tickContainer");
 let tickContainer2 = document.getElementById("tickContainer2");
@@ -129,8 +127,6 @@ let boundingRectangle1 = volumeKnob1.getBoundingClientRect();
 let boundingRectangle2 = volumeKnob2.getBoundingClientRect(); 
 
 function main(){
-    audio1.volume = 0; 
-    audio2.volume = 0; 
     volumeKnob1.addEventListener(getMouseDown(), onMouseDown1); 
     volumeKnob2.addEventListener(getMouseDown(), onMouseDown2); 
     document.addEventListener(getMouseUp(), onMouseUp); 
@@ -144,19 +140,6 @@ function onMouseDown1(){
         totalErrors++;
         console.log(`Errors: ${totalErrors}`);
     }
-    //start audio if not already playing
-    if(audio1.paused == true){
-        //mobile users must tap anywhere to start audio
-        //https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
-        let promise = audio1.play();
-
-        if(promise !== undefined) {
-            promise.then(function(){
-              audio1.play();
-            }).catch(function(error){
-            });
-        }
-    }
     document.addEventListener(getMouseMove(), onMouseMove1); 
 }
 
@@ -164,19 +147,6 @@ function onMouseDown2(){
     if(testPrompts[randomTestValues.randomTestIndex] != `Turn Right Knob To ${randomTestValues.knobValue2}`){
         totalErrors++;
         console.log(`Errors: ${totalErrors}`);
-    }
-    //start audio if not already playing
-    if(audio2.paused == true){
-        //mobile users must tap anywhere to start audio
-        //https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
-        let promise = audio2.play();
-
-        if(promise !== undefined) {
-            promise.then(function(){
-              audio2.play();
-            }).catch(function(error){
-            });
-        }
     }
     document.addEventListener(getMouseMove(), onMouseMove2); 
 }

@@ -15,8 +15,10 @@ body {
 }
 
 .topMenu {
+
   margin: auto;
   width: fit-content;
+  margin-top: -20px;
   margin-bottom: 200px;
 }
 .text-container {
