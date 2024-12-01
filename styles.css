@@ -17,14 +17,12 @@ body {
 .topMenu {
   margin: auto;
   width: fit-content;
-  margin-top: 30px;
   margin-bottom: 200px;
 }
 .text-container {
   color: #cac7c7;
   font-size: 2rem;
   position: absolute;
-  top: 10px; /* Adjust as needed */
   left: 50%;
   transform: translateX(-50%);
 }
