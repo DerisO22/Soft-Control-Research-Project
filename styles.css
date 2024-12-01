@@ -17,8 +17,8 @@ body {
 .topMenu {
   margin: auto;
   width: fit-content;
-  margin-top: 1rem;
-  margin-bottom: 200px;
+  margin-top: 30px;
+  margin-bottom: 100px;
 }
 .text-container {
   color: #cac7c7;
