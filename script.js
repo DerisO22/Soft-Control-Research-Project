@@ -8,7 +8,7 @@ let running = false;
 /**
  * Test Creation
  */
-let numTests = 20;
+let numTests = 5;
 let passedTests = [];
 let passedTestIndex = -1;
 // Set all to false to start
@@ -356,6 +356,9 @@ function outputTest() {
 
     if(passedTests[passedTests.length - 1] == true){
         showDataDownload();
+        promptTaskText.innerHTML = "All Tests Completed";
+        volumeOutput2.style.display = "none";
+        volumeOutput.style.display = "none";
     }
 
     // Push the csv object data and change values
@@ -378,16 +381,27 @@ function outputTest() {
     }
   
     // Update the test prompt
-    promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
+    if(passedTests[passedTests.length - 1] == false){
+        setTimeout(function(){
+            promptTaskText.innerHTML = testPrompts[randomTestValues.randomTestIndex];
+        }, 1000)
+        promptTaskText.innerHTML = "";
+    }
     products.push(csvDataObject);
 
     // Show values depending on the test
     if (testPrompts[randomTestValues.randomTestIndex] == `Turn Left Knob To ${randomTestValues.knobValue1}`) {
-        volumeOutput.style.display = "block";
+        volumeOutput.style.display = "none";
+        setTimeout(function(){
+            volumeOutput.style.display = "block";
+        }, 1000);
         volumeOutput2.style.display = "none";
         //horizontalSliderOutput.style.display = "none";
     } else if (testPrompts[randomTestValues.randomTestIndex] == `Turn Right Knob To ${randomTestValues.knobValue2}`) {
-        volumeOutput2.style.display = "block";
+        volumeOutput2.style.display = "none";
+        setTimeout(function(){
+            volumeOutput2.style.display = "block";
+        }, 1000);
         volumeOutput.style.display = "none";
         //horizontalSliderOutput.style.display = "none";
     // } else if (testPrompts[randomTestValues.randomTestIndex] == `Slide Slider To ${randomTestValues.sliderValue}`) {
@@ -517,6 +531,8 @@ tick();
 
 // Adjustable Value For txt Data
 setInterval(() => {
-    txtData += `Task ${passedTestIndex + 1} | Time: ${(timer / 1000).toFixed(3)}s | Knob1: ${document.getElementById("volumeValue").innerHTML} | Knob2: ${document.getElementById("volumeValue2").innerHTML}\t\t\t\t\t\t\t\n`;
+    if(passedTests[passedTests.length - 1] == false){
+        txtData += `Task ${passedTestIndex + 1} | Time: ${(timer / 1000).toFixed(3)}s | Knob1: ${document.getElementById("volumeValue").innerHTML} | Knob2: ${document.getElementById("volumeValue2").innerHTML}\t\t\t\t\t\t\t\n`;
+    }
 }, 500);
 

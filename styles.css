@@ -15,7 +15,6 @@ body {
 }
 
 .topMenu {
-
   margin: auto;
   width: fit-content;
   margin-top: -20px;
@@ -200,9 +199,9 @@ input:checked + .switchButton:before {
   margin-bottom: 3rem;
 }
 .bottomControls button {
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  font-size: 1.2rem;
 }
 #firstButton{
   background-color: rgb(255, 255, 255);
