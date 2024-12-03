@@ -534,5 +534,5 @@ setInterval(() => {
     if(passedTests[passedTests.length - 1] == false){
         txtData += `Task ${passedTestIndex + 1} | Time: ${(timer / 1000).toFixed(3)}s | Knob1: ${document.getElementById("volumeValue").innerHTML} | Knob2: ${document.getElementById("volumeValue2").innerHTML}\t\t\t\t\t\t\t\n`;
     }
-}, 500);
+}, 200);
 
