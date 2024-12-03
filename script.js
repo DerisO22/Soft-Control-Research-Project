@@ -8,7 +8,7 @@ let running = false;
 /**
  * Test Creation
  */
-let numTests = 5;
+let numTests = 20;
 let passedTests = [];
 let passedTestIndex = -1;
 // Set all to false to start
